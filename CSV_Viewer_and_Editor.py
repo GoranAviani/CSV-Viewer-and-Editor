@@ -1,6 +1,7 @@
 import csv
 
 def main():
+    filename = "imdb_top_4.csv"
     header = ("Rank", "Rating", "Title")
     data = [
         (1, 9.2, "The Shawshank Redemption(1994)"),
@@ -9,14 +10,37 @@ def main():
         (4, 8.9, "Pulp Fiction(1994)")
     ]
 
-    write(header, data)
+    writer(header, data, filename, "write")
+    updater(filename)
 
-def write(header, data):
-    with open ("imdb_top_4.csv" , "w", newline = "") as csvfile:
-        movies = csv.writer(csvfile)
-        movies.writerow(header)
-        for x in data:
-            movies.writerow(x)
+def writer(header, data, filename, option):
+        with open (filename, "w", newline = "") as csvfile:
+            if option == "write":
+
+                movies = csv.writer(csvfile)
+                movies.writerow(header)
+                for x in data:
+                    movies.writerow(x)
+            elif option == "update":
+                writer = csv.DictWriter(csvfile, fieldnames = header)
+                writer.writeheader()
+                writer.writerows(data)
+            else:
+                print("Option is not known")
+
+
+def updater(filename):
+    with open(filename, newline= "") as file:
+        readData = [row for row in csv.DictReader(file)]
+        # print(readData)
+        readData[0]['Rating'] = '9.4'
+        # print(readData)
+
+    readHeader = readData[0].keys()
+    writer(readHeader, readData, filename, "update")
+
+
+
 
 
 if __name__=="__main__":

@@ -1,7 +1,7 @@
 import csv
 
 def main():
-    header = ("Rank", "Rating" ,"Title")
+    header = ("Rank", "Rating", "Title")
     data = [
         (1, 9.2, "The Shawshank Redemption(1994)"),
         (2, 9.2,    "The Godfather(1972)"),
@@ -9,6 +9,9 @@ def main():
         (4, 8.9, "Pulp Fiction(1994)")
     ]
 
+    write(header, data)
+
+def write(header, data):
     with open ("imdb_top_4.csv" , "w", newline = "") as csvfile:
         movies = csv.writer(csvfile)
         movies.writerow(header)
